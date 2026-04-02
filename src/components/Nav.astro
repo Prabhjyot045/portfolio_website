@@ -1,0 +1,300 @@
+---
+const links = [
+  { label: 'About',      href: '/#about'      },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Projects',   href: '/#projects'   },
+  { label: 'Research',   href: '/#research'   },
+  { label: 'Education',  href: '/#education'  },
+];
+---
+
+<nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner container">
+    <a href="/#hero" class="nav-logo" aria-label="Home">PS</a>
+
+    <div class="nav-links" id="navLinks">
+      {links.map(link => (
+        <a
+          href={link.href}
+          class="nav-link"
+          data-section={link.href.replace('/#', '')}
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="/resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="nav-resume"
+        aria-label="Download resume (opens in new tab)"
+      >
+        Resume
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M6 1v7M3 5l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <button
+      class="nav-hamburger"
+      id="hamburger"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="navLinks"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: var(--nav-height);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav.scrolled {
+    background: rgba(13, 17, 23, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom-color: var(--border-subtle);
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  /* Logo */
+  .nav-logo {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--accent-dim), var(--surface-2));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: border-color var(--transition), box-shadow var(--transition);
+    flex-shrink: 0;
+  }
+
+  .nav-logo:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-dim);
+  }
+
+  /* Links */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .nav-link {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    transition: color var(--transition), background var(--transition);
+    position: relative;
+  }
+
+  .nav-link:hover {
+    color: var(--text);
+    background: var(--surface-2);
+  }
+
+  .nav-link.active {
+    color: var(--accent);
+  }
+
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+  }
+
+  /* Resume button */
+  .nav-resume {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--accent);
+    border: 1px solid rgba(88, 166, 255, 0.4);
+    border-radius: var(--radius-sm);
+    margin-left: 0.5rem;
+    transition: all var(--transition);
+    background: transparent;
+  }
+
+  .nav-resume:hover {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+  }
+
+  /* Hamburger */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px;
+    transition: border-color var(--transition);
+  }
+
+  .nav-hamburger:hover {
+    border-color: var(--text-muted);
+  }
+
+  .nav-hamburger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    transform-origin: center;
+  }
+
+  .nav-hamburger.open span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .nav-hamburger.open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .nav-hamburger.open span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .nav-hamburger {
+      display: flex;
+    }
+
+    .nav-links {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 1rem 1.5rem 1.5rem;
+      background: rgba(13, 17, 23, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      gap: 0.25rem;
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .nav-links.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .nav-link {
+      padding: 0.65rem 0.75rem;
+      font-size: 0.95rem;
+    }
+
+    .nav-link.active::after {
+      display: none;
+    }
+
+    .nav-resume {
+      margin-left: 0;
+      margin-top: 0.5rem;
+      justify-content: center;
+      padding: 0.65rem;
+    }
+  }
+</style>
+
+<script>
+  // ── Scroll behaviour ──────────────────────────────────────
+  const nav = document.getElementById('nav')!;
+
+  function onScroll() {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ── Hamburger toggle ──────────────────────────────────────
+  const hamburger = document.getElementById('hamburger') as HTMLButtonElement;
+  const navLinks  = document.getElementById('navLinks')!;
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  // Close mobile menu on any link click
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ── Scroll-spy (Intersection Observer) ───────────────────
+  const sections  = document.querySelectorAll<HTMLElement>('section[id]');
+  const navLinkEls = document.querySelectorAll<HTMLAnchorElement>('.nav-link[data-section]');
+
+  const spy = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinkEls.forEach(link => {
+            link.classList.toggle('active', link.dataset.section === id);
+          });
+        }
+      });
+    },
+    { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+  );
+
+  sections.forEach(section => spy.observe(section));
+</script>

@@ -1,0 +1,100 @@
+---
+import Nav from '../components/Nav.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Set to false on project pages to suppress the Person schema (they have their own) */
+  includePersonSchema?: boolean;
+}
+
+const {
+  title = 'Prabhjyot Singh — ML Researcher & Engineer',
+  description = 'ML Researcher and Engineer at the University of Waterloo. Researching ethical AI and reinforcement learning. Open to ML research internships and full-time roles.',
+  includePersonSchema = true,
+} = Astro.props;
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Prabhjyot Singh",
+  "url": "https://prabhjyotsingh.dev",
+  "jobTitle": "Graduate Research Assistant & ML Engineer",
+  "description": "MEng ECE AI student at the University of Waterloo researching ethical reinforcement learning. 6 co-op terms across ML, robotics, and software engineering.",
+  "email": "prabhjyot045@gmail.com",
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Waterloo"
+    }
+  ],
+  "knowsAbout": [
+    "Reinforcement Learning",
+    "Ethical AI",
+    "Machine Learning",
+    "Python",
+    "JAX",
+    "PyTorch",
+    "TorchRL",
+    "Robotics",
+    "Edge Computing",
+    "Self-Adaptive Systems"
+  ],
+  "sameAs": [
+    "https://github.com/Prabhjyot045",
+    "https://www.linkedin.com/in/singh-prabhjyot/"
+  ]
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Prabhjyot Singh" />
+    <meta name="keywords" content="ML Engineer, Machine Learning Researcher, Reinforcement Learning, Ethical AI, JAX, PyTorch, University of Waterloo, MEng ECE" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://prabhjyotsingh.dev" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://prabhjyotsingh.dev" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+
+    <!-- JSON-LD Structured Data -->
+    {includePersonSchema && (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)} />
+    )}
+  </head>
+  <body>
+    <Nav />
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

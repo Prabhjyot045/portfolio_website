@@ -1,0 +1,80 @@
+---
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+---
+
+<ProjectLayout
+  title="MTG Archetype Predictor"
+  tagline="Machine learning classifier that predicts Magic: The Gathering commander deck archetypes by integrating Scryfall and EDHRec community data."
+  tags={['ML', 'Classification', 'Python', 'Data Science', 'Jupyter', 'Scikit-Learn']}
+  github="https://github.com/Prabhjyot045/mtg_archetype_predictor"
+  period="Sep 2024 – Dec 2024"
+  course="MSE 446 — Introduction to Machine Learning"
+>
+
+  <h2>Overview</h2>
+  <p>
+    Magic: The Gathering's Commander format has a rich taxonomy of deck archetypes — Aggro, Control, Combo, Stax, Voltron, Tokens, and dozens of sub-archetypes. Manually classifying a commander card into its archetype requires domain knowledge and is time-consuming. This project builds an ML pipeline that automates classification by combining card statistics from <strong>Scryfall</strong> with archetype labels and community deck data from <strong>EDHRec</strong>.
+  </p>
+
+  <h2>Problem Statement</h2>
+  <p>
+    MTG card databases provide rich mechanical attributes (mana cost, card types, keywords, power/toughness), but archetype classification requires higher-level reasoning about how a commander enables a particular play strategy. The challenge is bridging this gap: learning a mapping from raw card mechanics to community-recognized archetypes from the noisy, multi-label EDHRec dataset.
+  </p>
+
+  <h2>Approach</h2>
+
+  <h3>Data Integration Pipeline</h3>
+  <p>
+    The first challenge was integrating two heterogeneous data sources:
+  </p>
+  <ul>
+    <li><strong>Scryfall API:</strong> Provides structured card metadata — mana value, colors, subtypes, keywords, oracle text, power/toughness, set, legality.</li>
+    <li><strong>EDHRec API:</strong> Provides community-aggregated archetype tags and deck frequency statistics per commander. Tags represent the dominant play patterns associated with each card (e.g., "Voltron", "Counters", "Aristocrats").</li>
+  </ul>
+  <p>
+    A unified dataset was built by joining on card name, with data quality tracking for cards that appear in one source but not the other.
+  </p>
+
+  <h3>Feature Engineering</h3>
+  <p>
+    Raw card data was transformed into ML-ready features:
+  </p>
+  <ul>
+    <li><strong>Color identity encoding:</strong> One-hot encoding of the 5 MTG colors (WUBRG) plus colorless.</li>
+    <li><strong>Keyword extraction:</strong> Binary features for common keywords (Flying, Haste, Lifelink, Trample, etc.).</li>
+    <li><strong>Oracle text TF-IDF:</strong> Bag-of-words features from the card's rules text, capturing mechanical patterns like "whenever a creature enters" or "sacrifice a creature".</li>
+    <li><strong>Mana curve features:</strong> Converted mana value, color pip counts, hybrid mana presence.</li>
+    <li><strong>Type line encoding:</strong> Card type and subtype indicators.</li>
+  </ul>
+
+  <h3>Classification Model</h3>
+  <p>
+    Given the multi-label nature of the target (a commander can belong to multiple archetypes), the problem was framed as <strong>multi-label classification</strong>. Several sklearn estimators were evaluated:
+  </p>
+  <ul>
+    <li>Logistic Regression with one-vs-rest</li>
+    <li>Random Forest (multi-output)</li>
+    <li>Gradient Boosted Trees</li>
+  </ul>
+  <p>
+    Evaluation used macro-averaged F1 to account for class imbalance — niche archetypes like "Stax" appear far less frequently in the EDHRec data than popular ones like "Tokens" or "Counters".
+  </p>
+
+  <h2>Key Findings</h2>
+
+  <div class="result-card">
+    <p>Oracle text TF-IDF features were the strongest predictors — specific mechanical phrases were highly correlated with particular archetypes, validating that the card's rules text encodes most of the archetype signal.</p>
+  </div>
+
+  <ul>
+    <li>Color identity alone was a poor predictor — most colors support multiple archetypes, confirming that mechanics matter more than color for classification.</li>
+    <li>The integrated dataset revealed a meaningful subset of commanders present in Scryfall but absent from EDHRec — these tend to be newly released cards without enough community data yet, a natural limitation of any community-sourced label set.</li>
+    <li>Random Forest outperformed Logistic Regression on rare archetypes, where the ensemble structure helps generalize from sparse training examples.</li>
+  </ul>
+
+  <h2>Reflection</h2>
+  <p>
+    The most interesting challenge was the label noise in EDHRec data: community archetype tags reflect <em>dominant</em> deck strategies, not ground truth, and a single commander is often tagged for 3–5 archetypes simultaneously. A more sophisticated approach would model the label dependencies explicitly (e.g., with a classifier chain or a label-aware embedding model) rather than treating each label independently. This project was a strong introduction to real-world multi-label classification with noisy, multi-source data.
+  </p>
+
+</ProjectLayout>

@@ -1,0 +1,1483 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = [
+  {
+    title: 'Aether-Edge',
+    description: 'Decentralized edge-native building management system reducing Age of Information from 19.4s (centralized) to near-zero.',
+    tags: ['Edge Computing', 'Python', 'Sensors', 'Simulation'],
+    categories: ['systems'],
+    github: 'https://github.com/Prabhjyot045/gas_prediction_network',
+    detail: '/projects/aether-edge',
+    highlight: false,
+  },
+  {
+    title: 'NAO Robot Teacher Gender Study',
+    description: 'Webots simulation investigating gender bias in human-robot interaction within educational environments using a humanoid NAO robot.',
+    tags: ['HRI', 'Robotics', 'Bias Research', 'Python'],
+    categories: ['robotics', 'ml-ai'],
+    github: 'https://github.com/Prabhjyot045/nao_robot_teacher_gender_study',
+    detail: '/projects/nao-robot-study',
+    highlight: false,
+  },
+  {
+    title: 'Aegis Lights',
+    description: 'Self-adaptive urban traffic control system achieving a 45–49% reduction in average trip time across all traffic scenarios.',
+    tags: ['RL', 'Python', 'Flask', 'Simulation'],
+    categories: ['ml-ai', 'systems'],
+    github: 'https://github.com/Prabhjyot045',
+    detail: '/projects/aegis-lights',
+    highlight: true,
+  },
+  {
+    title: 'Canary',
+    description: 'IoT personal air quality monitor — custom PCB, embedded BLE firmware, 3D-printed enclosure, and Android companion app. Built as a 4th year capstone.',
+    tags: ['IoT', 'Embedded C', 'PCB Design', 'BLE'],
+    categories: ['systems'],
+    github: 'https://github.com/mkusnir/canary-dev',
+    detail: '/projects/canary',
+    highlight: false,
+  },
+  {
+    title: 'MTG Archetype Predictor',
+    description: 'ML classifier that predicts Magic: The Gathering commander deck archetypes by integrating Scryfall and EDHRec community data.',
+    tags: ['ML', 'Classification', 'Python', 'Data Science'],
+    categories: ['ml-ai'],
+    github: 'https://github.com/Prabhjyot045/mtg_archetype_predictor',
+    detail: '/projects/mtg-predictor',
+    highlight: false,
+  },
+];
+
+const experience = [
+  {
+    role: 'Graduate Research Assistant',
+    company: 'UWECEML Lab, University of Waterloo',
+    location: 'Waterloo, Canada',
+    dates: 'Oct 2025 – Present',
+    type: 'Research',
+    domain: 'uwaterloo.ca',
+    initials: 'UW',
+    bullets: [
+      'Researching ethical AI within reinforcement learning environments on the Moral AI Systems team — defining experiment protocols and evaluation criteria.',
+      'Building Craftax RL experiments and JAX training/evaluation pipelines for agent-behavior analysis and benchmarking.',
+      'Developing a Compute Canada compatible framework for scalable, reproducible ethical-AI experiments (configs, seeding, logging, batch runs).',
+    ],
+  },
+  {
+    role: 'Software Engineer',
+    company: 'BrainRidge Consulting',
+    location: 'Toronto, Canada',
+    dates: 'May 2025 – Sep 2025',
+    type: 'Industry',
+    domain: 'brainridge.ca',
+    initials: 'BR',
+    bullets: [
+      'Designed and developed LLM-powered agents using Claude Sonnet 4, implementing advanced prompt engineering and validation loops for reliable structured outputs.',
+      'Built and deployed scalable NestJS microservices enabling secure GitHub and Jira REST API integration for automated issue and repository management.',
+      'Architected a role-based authentication system with Auth0, Redis, and JWT for consistent RBAC across distributed services.',
+    ],
+  },
+  {
+    role: 'Robotics Software Developer',
+    company: 'Lincoln Electric Automation',
+    location: 'Waterloo, Canada',
+    dates: 'Sep 2024 – Dec 2024',
+    type: 'Industry',
+    domain: 'lincolnelectric.com',
+    initials: 'LE',
+    bullets: [
+      'Developed and optimized embedded firmware for FANUC and ABB robotic systems in TypeScript, C++, and KAREL.',
+      'Improved trajectory planning and motion control algorithms, reducing erratic robotic movement by 30%.',
+      'Led a codebase refactoring initiative, reducing file count by 20% and improving overall architecture clarity.',
+    ],
+  },
+  {
+    role: 'System Analyst',
+    company: 'XTL Transport Inc',
+    location: 'Toronto, Canada',
+    dates: 'Jan 2024 – Apr 2024',
+    type: 'Industry',
+    domain: 'xtl.ca',
+    initials: 'XTL',
+    bullets: [
+      'Deployed an ITSM solution reducing ticket turnaround time by 45% and standardizing support workflows.',
+      'Rolled out networked digital signage across five warehouses, linking plug-and-play devices into a centralized dashboard.',
+    ],
+  },
+  {
+    role: 'Robotics Test Engineer',
+    company: 'Kindred AI',
+    location: 'Toronto, Canada',
+    dates: 'Jan 2023 – Apr 2023',
+    type: 'Industry',
+    domain: 'kindred.ai',
+    initials: 'KAI',
+    bullets: [
+      'Designed and implemented a PyTorch supervised learning model to adjust image brightness/contrast, reducing segmentation error from 30% to 10%.',
+      'Expanded automated end-to-end test coverage to 95% using Python and Cucumber in a virtual simulation environment.',
+      'Uncovered a 30% error rate in low-light scenarios, driving firmware calibration improvements for enhanced sensor reliability.',
+    ],
+  },
+  {
+    role: 'QA Engineer',
+    company: 'View The Space Inc',
+    location: 'Remote',
+    dates: 'May 2022 – Aug 2022',
+    type: 'Industry',
+    domain: 'viewthespace.com',
+    initials: 'VTS',
+    bullets: [
+      'Implemented automated regression testing with Cypress, reducing manual QA effort by 15%.',
+      'Collaborated with product and engineering teams to improve documentation and accelerate feature releases by 20%.',
+    ],
+  },
+  {
+    role: 'QA Engineer',
+    company: 'Plooto Inc',
+    location: 'Toronto, Canada',
+    dates: 'Sep 2021 – Dec 2021',
+    type: 'Industry',
+    domain: 'plooto.com',
+    initials: 'PL',
+    bullets: [
+      'Built automated test suites in JavaScript with Ghost Inspector to validate OCR workflows.',
+      'Optimized HubSpot web pages (HTML/CSS/JS), boosting Lighthouse performance scores by 30 points.',
+    ],
+  },
+  {
+    role: 'Fullstack Engineer',
+    company: 'FleetOperate',
+    location: 'Remote',
+    dates: 'Jan 2021 – Apr 2021',
+    type: 'Industry',
+    domain: 'fleetoperate.com',
+    initials: 'FO',
+    bullets: [
+      'Developed AWS-integrated REST APIs and built responsive frontends with Angular, TypeScript, and CSS.',
+      'Configured Ubuntu and AWS Linux servers for scalable, production-ready deployments.',
+    ],
+  },
+];
+
+const tagColorMap: Record<string, string> = {
+  'RL': 'tag-blue',
+  'Python': 'tag-blue',
+  'ML': 'tag-blue',
+  'Embedded C': 'tag-blue',
+  'Flask': 'tag-green',
+  'Simulation': 'tag-green',
+  'Edge Computing': 'tag-green',
+  'Sensors': 'tag-green',
+  'IoT': 'tag-green',
+  'BLE': 'tag-green',
+  'Robotics': 'tag-orange',
+  'HRI': 'tag-orange',
+  'Bias Research': 'tag-orange',
+  'Android': 'tag-orange',
+  'Classification': 'tag-blue',
+  'Data Science': 'tag-blue',
+};
+
+function tagColor(tag: string) {
+  return tagColorMap[tag] ?? 'tag-muted';
+}
+---
+
+<BaseLayout>
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section id="hero" class="hero">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-glow"    aria-hidden="true"></div>
+
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Open to ML Research Roles &middot; 2026
+        </div>
+
+        <h1 class="hero-name">Prabhjyot<br />Singh</h1>
+
+        <p class="hero-tagline">
+          <strong>ML Researcher &amp; Engineer</strong> at the University of Waterloo.<br />
+          Ethical AI &middot; Reinforcement Learning &middot; Autonomous Systems
+        </p>
+
+        <div class="hero-actions">
+          <a href="/#research" class="btn btn-primary">View Research</a>
+          <a href="/#projects" class="btn btn-outline">View Projects</a>
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+            Download Resume
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+              <path d="M6.5 1.5v7M3.5 5.5l3 3 3-3M1 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="hero-social">
+          <a href="https://github.com/Prabhjyot045" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/singh-prabhjyot/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-graphic" aria-hidden="true">
+        <div class="hex-grid">
+          {Array.from({length: 9}).map((_, i) => (
+            <div class={`hex hex-${i + 1}`}></div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <a href="/#about" class="scroll-indicator" aria-label="Scroll to About section">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       ABOUT
+  ══════════════════════════════════════════ -->
+  <section id="about" class="section about">
+    <div class="container">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <circle cx="7" cy="4.5" r="2.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M1.5 12.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        About
+      </div>
+      <h2 class="section-title">About Me</h2>
+
+      <div class="about-grid">
+        <div class="about-bio">
+          <p>
+            I'm a Master's student at the University of Waterloo researching <strong>ethical AI and reinforcement learning</strong> under the UWECEML Lab. My work focuses on building evaluation frameworks that surface misaligned agent behavior and training methods that respect human values.
+          </p>
+          <p>
+            Across <strong>6 co-op work terms</strong>, I've applied ML and software engineering in industry — from building PyTorch computer vision models at Kindred AI to designing LLM-powered agentic systems at BrainRidge Consulting. I enjoy sitting at the intersection of research and engineering.
+          </p>
+          <p>
+            Outside of research, I'm drawn to the philosophical questions behind alignment: what does it mean for an AI to behave "ethically," and how do we measure that rigorously?
+          </p>
+        </div>
+
+        <div class="skills-panel">
+          <div class="skills-group">
+            <div class="skills-group-title">AI / ML</div>
+            <div class="skills-tags">
+              <span class="tag tag-blue">PyTorch</span>
+              <span class="tag tag-blue">TorchRL</span>
+              <span class="tag tag-blue">JAX</span>
+              <span class="tag tag-blue">TensorFlow</span>
+              <span class="tag tag-blue">Scikit-Learn</span>
+              <span class="tag tag-blue">Hugging Face</span>
+              <span class="tag tag-blue">OpenAI APIs</span>
+              <span class="tag tag-blue">Reinforcement Learning</span>
+            </div>
+          </div>
+          <div class="skills-group">
+            <div class="skills-group-title">Languages</div>
+            <div class="skills-tags">
+              <span class="tag tag-green">Python</span>
+              <span class="tag tag-green">C / C++</span>
+              <span class="tag tag-green">TypeScript</span>
+              <span class="tag tag-green">JavaScript</span>
+              <span class="tag tag-green">R</span>
+            </div>
+          </div>
+          <div class="skills-group">
+            <div class="skills-group-title">Infrastructure</div>
+            <div class="skills-tags">
+              <span class="tag tag-muted">Docker</span>
+              <span class="tag tag-muted">AWS</span>
+              <span class="tag tag-muted">Terraform</span>
+              <span class="tag tag-muted">Redis</span>
+              <span class="tag tag-muted">NestJS</span>
+              <span class="tag tag-muted">Angular</span>
+              <span class="tag tag-muted">GitHub Actions</span>
+              <span class="tag tag-muted">CI/CD</span>
+            </div>
+          </div>
+          <div class="skills-group">
+            <div class="skills-group-title">Robotics &amp; Embedded</div>
+            <div class="skills-tags">
+              <span class="tag tag-orange">FANUC / ABB</span>
+              <span class="tag tag-orange">KAREL</span>
+              <span class="tag tag-orange">RTOS</span>
+              <span class="tag tag-orange">Webots</span>
+              <span class="tag tag-orange">Vivado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       EXPERIENCE
+  ══════════════════════════════════════════ -->
+  <section id="experience" class="section experience">
+    <div class="container">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <rect x="1.5" y="3.5" width="11" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M4.5 3.5V3a2 2 0 014 0v.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M1.5 7h11" stroke="currentColor" stroke-width="1.3"/>
+        </svg>
+        Experience
+      </div>
+      <h2 class="section-title">Work History</h2>
+      <p class="section-desc">6 co-op terms and industry experience across ML, robotics, and software engineering.</p>
+
+      <div class="timeline">
+        {experience.map((job, i) => (
+          <div class="timeline-item">
+            <div class="timeline-marker">
+              <div class={`timeline-dot ${i === 0 ? 'timeline-dot--active' : ''}`}></div>
+              {i < experience.length - 1 && <div class="timeline-line"></div>}
+            </div>
+            <div class="timeline-content card">
+              <div class="timeline-header">
+                <div class="timeline-header-left">
+                  <div class="company-logo-wrap">
+                    <img
+                      src={`https://logo.clearbit.com/${job.domain}`}
+                      alt={`${job.company} logo`}
+                      class="company-logo"
+                      width="36"
+                      height="36"
+                      loading="lazy"
+                      onerror="this.parentElement.classList.add('logo-failed')"
+                    />
+                    <span class="logo-initials">{job.initials}</span>
+                  </div>
+                  <div>
+                    <h3 class="timeline-role">{job.role}</h3>
+                    <div class="timeline-meta">
+                      <span class="timeline-company">{job.company}</span>
+                      <span class="meta-sep">&middot;</span>
+                      <span class="timeline-location">{job.location}</span>
+                    </div>
+                  </div>
+                </div><!-- .timeline-header-left -->
+                <div class="timeline-right">
+                  <span class="timeline-dates">{job.dates}</span>
+                  <span class={`timeline-type ${job.type === 'Research' ? 'type-research' : 'type-industry'}`}>{job.type}</span>
+                </div>
+              </div>
+              <ul class="timeline-bullets">
+                {job.bullets.map(bullet => <li>{bullet}</li>)}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       PROJECTS
+  ══════════════════════════════════════════ -->
+  <section id="projects" class="section projects">
+    <div class="container">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <rect x="1.5" y="1.5" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M4.5 7h5M7 4.5v5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        Projects
+      </div>
+      <h2 class="section-title">Selected Work</h2>
+      <p class="section-desc">Projects spanning ML systems, edge computing, human-robot interaction, and reinforcement learning.</p>
+
+      <div class="filter-row" role="group" aria-label="Filter projects by category">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="ml-ai">ML / AI</button>
+        <button class="filter-btn" data-filter="robotics">Robotics</button>
+        <button class="filter-btn" data-filter="systems">Systems</button>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid">
+        {projects.map(project => (
+          <div
+            class={`project-card card ${project.highlight ? 'project-card--highlight' : ''}`}
+            data-categories={project.categories.join(',')}
+          >
+            <div class="project-card-top">
+              <div class="project-card-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="2" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.3"/>
+                  <path d="M6 10h8M10 6v8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="project-card-links">
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`${project.title} on GitHub`} class="icon-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <h3 class="project-card-title">{project.title}</h3>
+            <p class="project-card-desc">{project.description}</p>
+
+            <div class="project-card-footer">
+              <div class="project-card-tags">
+                {project.tags.map(tag => (
+                  <span class={`tag ${tagColor(tag)}`}>{tag}</span>
+                ))}
+              </div>
+              <a href={project.detail} class="read-more-link">
+                Details
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M2.5 6h7M6 2.5l3.5 3.5L6 9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       RESEARCH
+  ══════════════════════════════════════════ -->
+  <section id="research" class="section research">
+    <div class="container">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M7 4.5v2.5l1.5 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        Research
+      </div>
+      <h2 class="section-title">Ethical AI &amp; Reinforcement Learning</h2>
+      <p class="section-desc">
+        Building AI systems that are both capable and aligned with human values.
+        Currently at the UWECEML Lab, University of Waterloo.
+      </p>
+
+      <div class="interests-grid">
+        <div class="interest-card card">
+          <div class="interest-icon" aria-hidden="true">⬡</div>
+          <h3>Ethical AI &amp; Value Alignment</h3>
+          <p>Investigating how reinforcement learning agents can learn to respect human values and moral constraints — through reward modeling, constrained optimization, and alignment verification.</p>
+        </div>
+        <div class="interest-card card">
+          <div class="interest-icon" aria-hidden="true">⬡</div>
+          <h3>Agent Behavior Analysis</h3>
+          <p>Designing rigorous evaluation protocols that measure ethical behavior in RL environments. Building reproducible benchmarks on Craftax to surface and quantify misaligned agent behaviors.</p>
+        </div>
+        <div class="interest-card card">
+          <div class="interest-icon" aria-hidden="true">⬡</div>
+          <h3>Autonomous &amp; Adaptive Systems</h3>
+          <p>Exploring how intelligent systems can dynamically adapt to complex environments while maintaining behavioral guarantees — from self-adaptive control loops to edge-native sensing.</p>
+        </div>
+      </div>
+
+      <div class="research-exp">
+        <div class="research-exp-header">
+          <div class="research-status">
+            <span class="status-dot"></span>
+            Research in Progress
+          </div>
+          <h3 class="research-title">
+            Methods for Training and Evaluating Ethical Reinforcement Learning Behaviour
+          </h3>
+          <div class="research-meta">
+            <span>UWECEML Lab &middot; University of Waterloo</span>
+            <span class="meta-sep">&middot;</span>
+            <span>Moral AI Systems Team</span>
+            <span class="meta-sep">&middot;</span>
+            <span>Oct 2025 – Present</span>
+          </div>
+        </div>
+
+        <ul class="research-bullets">
+          <li>Researching ethical AI within reinforcement learning environments — defining experiment protocols and evaluation criteria for agent moral behavior.</li>
+          <li>Building Craftax RL experiments and JAX training/evaluation pipelines for large-scale agent-behavior analysis and benchmarking.</li>
+          <li>Developing a Compute Canada compatible framework for scalable, reproducible ethical-AI experiments with full configuration management, seeding, and batch run support.</li>
+        </ul>
+
+        <div class="research-tags">
+          <span class="tag tag-blue">Reinforcement Learning</span>
+          <span class="tag tag-blue">JAX</span>
+          <span class="tag tag-blue">Craftax</span>
+          <span class="tag tag-green">Ethical AI</span>
+          <span class="tag tag-green">Value Alignment</span>
+          <span class="tag tag-muted">Compute Canada</span>
+          <span class="tag tag-muted">Python</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       EDUCATION
+  ══════════════════════════════════════════ -->
+  <section id="education" class="section education">
+    <div class="container">
+      <div class="section-label">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M7 1.5L13 5l-6 3.5L1 5l6-3.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+          <path d="M3.5 6.5v3.5a7 7 0 007 0V6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        Education
+      </div>
+      <h2 class="section-title">Academic Background</h2>
+      <p class="section-desc">University of Waterloo, one of Canada's top engineering programs.</p>
+
+      <div class="edu-grid">
+
+        <div class="edu-card card edu-card--grad">
+          <div class="edu-card-header">
+            <div>
+              <div class="edu-degree">Master of Engineering</div>
+              <div class="edu-field">Electrical &amp; Computer Engineering — AI Specialization</div>
+              <div class="edu-school">University of Waterloo</div>
+            </div>
+            <div class="edu-right">
+              <div class="edu-dates">Sep 2025 – Present</div>
+              <div class="edu-gpa">
+                <span class="gpa-label">GPA</span>
+                <span class="gpa-value">84.67</span>
+              </div>
+            </div>
+          </div>
+          <div class="edu-section">
+            <div class="edu-section-title">Coursework</div>
+            <div class="course-tags">
+              <span class="tag tag-blue">Algorithm Design &amp; Analysis</span>
+              <span class="tag tag-blue">Intro to Artificial Intelligence</span>
+              <span class="tag tag-blue">Intelligent Sensors &amp; Networks</span>
+              <span class="tag tag-green">Self-Adaptive Software Systems</span>
+              <span class="tag tag-green">Distributed &amp; Network-Centric Computing</span>
+              <span class="tag tag-muted">Social Robotics</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="edu-card card">
+          <div class="edu-card-header">
+            <div>
+              <div class="edu-degree">Bachelor of Applied Science</div>
+              <div class="edu-field">Computer Engineering — AI Option, Honours, Co-op</div>
+              <div class="edu-school">University of Waterloo</div>
+            </div>
+            <div class="edu-right">
+              <div class="edu-dates">Sep 2020 – Apr 2025</div>
+              <div class="edu-coops">6 Co-op Terms</div>
+            </div>
+          </div>
+          <div class="edu-section">
+            <div class="edu-section-title">Awards</div>
+            <div class="award-item">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M7 1l1.5 3.5L12 5l-2.5 2.5.5 3.5L7 9.5 4 11l.5-3.5L2 5l3.5-.5L7 1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+              </svg>
+              University of Waterloo President's Scholarship — 2021
+            </div>
+          </div>
+          <div class="edu-section">
+            <div class="edu-section-title">Selected Coursework</div>
+            <div class="course-tags">
+              <span class="tag tag-blue">Reinforcement Learning</span>
+              <span class="tag tag-blue">Introduction to Machine Learning</span>
+              <span class="tag tag-blue">Autonomous Vehicles</span>
+              <span class="tag tag-green">Engineering Design Project <em>(97)</em></span>
+              <span class="tag tag-green">Compilers <em>(87)</em></span>
+              <span class="tag tag-green">Computer Architecture <em>(84)</em></span>
+              <span class="tag tag-muted">Embedded Software</span>
+              <span class="tag tag-muted">Linear Algebra</span>
+              <span class="tag tag-muted">Probability &amp; Statistics</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       CONTACT
+  ══════════════════════════════════════════ -->
+  <section id="contact" class="section contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-text">
+          <h2 class="section-title">Get In Touch</h2>
+          <p class="contact-desc">
+            I'm currently seeking <strong>ML research internships and full-time roles for 2026</strong>.
+            If you're working on interesting problems in AI alignment, RL, or autonomous systems — I'd love to connect.
+          </p>
+        </div>
+
+        <div class="contact-links">
+          <a href="mailto:prabhjyot045@gmail.com" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <rect x="1.5" y="3.5" width="15" height="11" rx="2" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M1.5 6l7.5 5 7.5-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-link-label">Email</div>
+              <div class="contact-link-value">prabhjyot045@gmail.com</div>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/singh-prabhjyot/" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-link-label">LinkedIn</div>
+              <div class="contact-link-value">singh-prabhjyot</div>
+            </div>
+          </a>
+
+          <a href="https://github.com/Prabhjyot045" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-link-label">GitHub</div>
+              <div class="contact-link-value">Prabhjyot045</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <span>&copy; 2026 Prabhjyot Singh</span>
+        <span>Built with Astro</span>
+      </div>
+    </footer>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+/* ── Hero ─────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: var(--nav-height);
+}
+
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, rgba(88,166,255,0.06) 1px, transparent 0);
+  background-size: 44px 44px;
+  pointer-events: none;
+}
+
+.hero-glow {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 600px;
+  background: radial-gradient(ellipse at center, rgba(88,166,255,0.1) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4rem;
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+}
+
+.hero-content { max-width: 620px; }
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid rgba(88,166,255,0.25);
+  border-radius: 50px;
+  padding: 0.3rem 0.85rem;
+  margin-bottom: 1.75rem;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.85); }
+}
+
+.hero-name {
+  font-size: clamp(3rem, 7.5vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 1.25rem;
+  background: linear-gradient(130deg, #e6edf3 25%, #79b8ff 65%, #58a6ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-tagline {
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 2.25rem;
+  max-width: none;
+}
+.hero-tagline strong { color: var(--text); }
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.hero-social {
+  display: flex;
+  gap: 1.25rem;
+}
+.hero-social a {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+.hero-social a:hover { color: var(--accent); }
+
+.hero-graphic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.45;
+}
+
+.hex-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  gap: 8px;
+  transform: rotate(15deg);
+}
+
+.hex {
+  width: 60px;
+  height: 60px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.hex-1, .hex-5, .hex-9 { background: var(--accent-dim); border-color: rgba(88,166,255,0.3); }
+.hex-3, .hex-7          { background: var(--green-dim);  border-color: rgba(63,185,80,0.3); }
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-dim);
+  animation: bounce 2.2s infinite;
+  transition: color var(--transition);
+}
+.scroll-indicator:hover { color: var(--accent); }
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(7px); }
+}
+
+@media (max-width: 860px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-graphic { display: none; }
+}
+@media (max-width: 480px) {
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn { justify-content: center; }
+}
+
+/* ── Research ─────────────────────────────────────── */
+.interests-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.interest-icon {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.interest-card h3 {
+  font-size: 0.975rem;
+  margin-bottom: 0.5rem;
+}
+
+.interest-card p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  max-width: none;
+  line-height: 1.7;
+}
+
+.research-exp {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1.75rem 2rem;
+}
+
+.research-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.75rem;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2.5s infinite;
+}
+
+.research-title {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  margin-bottom: 0.6rem;
+}
+
+.research-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.meta-sep { color: var(--text-dim); }
+
+.research-bullets { list-style: none; margin-bottom: 1.25rem; }
+.research-bullets li {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  padding: 0.3rem 0 0.3rem 1.2rem;
+  position: relative;
+  line-height: 1.65;
+}
+.research-bullets li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 0.65rem;
+  top: 0.52rem;
+}
+
+.research-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+@media (max-width: 768px) {
+  .interests-grid { grid-template-columns: 1fr; }
+  .research-exp { padding: 1.25rem; }
+}
+
+/* ── Projects ─────────────────────────────────────── */
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.filter-btn {
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  transition: all var(--transition);
+}
+.filter-btn:hover { color: var(--text); border-color: var(--text-muted); }
+.filter-btn.active {
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-color: rgba(88,166,255,0.4);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.project-card--highlight {
+  border-color: rgba(88,166,255,0.3);
+  background: linear-gradient(145deg, var(--surface) 80%, rgba(88,166,255,0.04) 100%);
+}
+
+.project-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.project-card-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(88,166,255,0.2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+.project-card-links { display: flex; gap: 0.5rem; }
+
+.icon-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  transition: all var(--transition);
+}
+.icon-link:hover { color: var(--accent); border-color: rgba(88,166,255,0.4); }
+
+.project-card-title {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-card-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  flex: 1;
+  max-width: none;
+  margin-bottom: 1.25rem;
+}
+
+.project-card-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.project-card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.read-more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: gap var(--transition);
+}
+.read-more-link:hover { gap: 0.55rem; }
+
+@media (max-width: 640px) {
+  .projects-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Experience ───────────────────────────────────── */
+.timeline { display: flex; flex-direction: column; }
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 1.25rem;
+}
+
+.timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1.5rem;
+}
+
+.timeline-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.timeline-dot--active {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-dim);
+}
+
+.timeline-line {
+  width: 1px;
+  flex: 1;
+  min-height: 20px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+.timeline-content {
+  margin-bottom: 1.25rem;
+  padding: 1.25rem 1.5rem;
+}
+.timeline-content:hover { transform: none; }
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.timeline-header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+/* Company logo with initials fallback */
+.company-logo-wrap {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.company-logo {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  padding: 4px;
+}
+
+/* Show initials when logo fails to load */
+.company-logo-wrap .logo-initials {
+  display: none;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  text-align: center;
+  padding: 0 3px;
+}
+
+.company-logo-wrap.logo-failed .company-logo { display: none; }
+.company-logo-wrap.logo-failed .logo-initials { display: flex; }
+
+.timeline-role {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.timeline-meta {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.timeline-location { color: var(--text-dim); }
+
+.timeline-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.timeline-dates {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.timeline-type {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-xs);
+}
+
+.type-research { background: var(--accent-dim); color: var(--accent); }
+.type-industry  { background: var(--surface-2); color: var(--text-dim); }
+
+.timeline-bullets { list-style: none; }
+.timeline-bullets li {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  padding: 0.28rem 0 0.28rem 1.1rem;
+  position: relative;
+  line-height: 1.65;
+}
+.timeline-bullets li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--text-dim);
+  font-size: 0.62rem;
+  top: 0.5rem;
+}
+
+@media (max-width: 540px) {
+  .timeline-header { flex-direction: column; gap: 0.5rem; }
+  .timeline-right  { align-items: flex-start; }
+}
+
+/* ── Education ────────────────────────────────────── */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.edu-card { padding: 1.75rem; }
+.edu-card--grad { border-color: rgba(88,166,255,0.3); }
+
+.edu-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.edu-degree {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.edu-field {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+  font-weight: 500;
+}
+
+.edu-school { font-size: 0.8rem; color: var(--text-dim); }
+
+.edu-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.edu-dates { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
+
+.edu-gpa {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--accent-dim);
+  border: 1px solid rgba(88,166,255,0.25);
+  border-radius: var(--radius-xs);
+  padding: 0.2rem 0.5rem;
+}
+.gpa-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.gpa-value {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: var(--font-heading);
+}
+
+.edu-coops {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--green);
+  background: var(--green-dim);
+  border: 1px solid rgba(63,185,80,0.25);
+  border-radius: var(--radius-xs);
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
+}
+
+.edu-section { margin-bottom: 1.25rem; }
+.edu-section:last-child { margin-bottom: 0; }
+
+.edu-section-title {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.6rem;
+}
+
+.course-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.course-tags em { font-style: normal; opacity: 0.7; }
+
+.award-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  padding: 0.5rem 0.75rem;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.award-item svg { color: #f0883e; flex-shrink: 0; }
+
+@media (max-width: 768px) {
+  .edu-grid { grid-template-columns: 1fr; }
+}
+
+/* ── About ────────────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.about-bio p {
+  font-size: 0.975rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  max-width: none;
+}
+.about-bio p:last-child { margin-bottom: 0; }
+.about-bio strong { color: var(--text); font-weight: 600; }
+
+.skills-panel { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.skills-group-title {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.skills-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+@media (max-width: 860px) {
+  .about-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Contact ──────────────────────────────────────── */
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
+  align-items: start;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-top: 1rem;
+  max-width: none;
+}
+.contact-desc strong { color: var(--text); }
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  min-width: 250px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: all var(--transition);
+}
+.contact-link:hover {
+  border-color: rgba(88,166,255,0.4);
+  background: var(--surface-2);
+  transform: translateX(3px);
+}
+
+.contact-link-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(88,166,255,0.2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.contact-link-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.12rem;
+}
+
+.contact-link-value {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Footer */
+.site-footer { padding: 1.5rem 0; }
+.site-footer .container {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+@media (max-width: 768px) {
+  .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .contact-links { min-width: auto; }
+}
+@media (max-width: 480px) {
+  .site-footer .container { flex-direction: column; gap: 0.4rem; text-align: center; }
+}
+</style>
+
+
+<script>
+  // ── Project filter ────────────────────────────────
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.project-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter!;
+      cards.forEach(card => {
+        const cats = card.dataset.categories ?? '';
+        card.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
+      });
+    });
+  });
+</script>

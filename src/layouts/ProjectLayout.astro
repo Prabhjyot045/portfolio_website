@@ -1,0 +1,340 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  tagline: string;
+  tags: string[];
+  github?: string;
+  demo?: string;
+  period: string;
+  course?: string;
+  /** Path to a PDF report, e.g. "/assets/projects/aegis-lights/report.pdf" */
+  report?: string;
+}
+
+const { title, tagline, tags, github, demo, period, course, report } = Astro.props;
+
+const tagColorMap: Record<string, string> = {
+  'RL': 'tag-blue',
+  'Python': 'tag-blue',
+  'ML': 'tag-blue',
+  'JAX': 'tag-blue',
+  'PyTorch': 'tag-blue',
+  'Classification': 'tag-blue',
+  'Data Science': 'tag-blue',
+  'Embedded C': 'tag-blue',
+  'Flask': 'tag-green',
+  'Simulation': 'tag-green',
+  'Edge Computing': 'tag-green',
+  'Sensors': 'tag-green',
+  'Webots': 'tag-green',
+  'IoT': 'tag-green',
+  'BLE': 'tag-green',
+  'Robotics': 'tag-orange',
+  'HRI': 'tag-orange',
+  'Bias Research': 'tag-orange',
+  'Android': 'tag-orange',
+  'Systems': 'tag-purple',
+};
+
+function tagColor(tag: string) {
+  return tagColorMap[tag] ?? 'tag-muted';
+}
+---
+
+<BaseLayout title={`${title} — Prabhjyot Singh`}>
+  <article class="project-page">
+    <div class="container">
+
+      <!-- Back link -->
+      <a href="/#projects" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to Projects
+      </a>
+
+      <!-- Header -->
+      <header class="project-header">
+        {course && <span class="course-badge">{course}</span>}
+        <h1 class="project-title">{title}</h1>
+        <p class="project-tagline">{tagline}</p>
+
+        <div class="project-meta">
+          <span class="meta-period">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <rect x="1" y="2" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M4 1v2M10 1v2M1 5.5h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+            {period}
+          </span>
+
+          <div class="project-links">
+            {github && (
+              <a href={github} target="_blank" rel="noopener noreferrer" class="btn btn-ghost project-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                </svg>
+                GitHub
+              </a>
+            )}
+            {demo && (
+              <a href={demo} target="_blank" rel="noopener noreferrer" class="btn btn-outline project-link">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M5.5 2.5H2.5a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1V9.5M8.5 1.5h4m0 0v4m0-4L6 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Live Demo
+              </a>
+            )}
+          </div>
+        </div>
+
+        <div class="project-tags">
+          {tags.map(tag => (
+            <span class={`tag ${tagColor(tag)}`}>{tag}</span>
+          ))}
+        </div>
+      </header>
+
+      <hr class="divider" />
+
+      <!-- Page content injected here -->
+      <div class="project-content">
+        <slot />
+
+        {report && (
+          <div class="pdf-viewer-section">
+            <h2>Report</h2>
+            <div class="pdf-viewer-wrap">
+              <iframe
+                src={report}
+                title={`${title} — Full Report`}
+                class="pdf-iframe"
+                loading="lazy"
+              />
+            </div>
+            <div class="pdf-fallback">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 1v9M5 7l3 3 3-3M2 13h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <a href={report} target="_blank" rel="noopener noreferrer">
+                Open / Download Report (PDF)
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-page {
+    padding-top: calc(var(--nav-height) + 3rem);
+    padding-bottom: 6rem;
+    min-height: 100vh;
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 2.5rem;
+    transition: color var(--transition);
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* Header */
+  .project-header { margin-bottom: 2rem; }
+
+  .course-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid rgba(88,166,255,0.25);
+    border-radius: var(--radius-xs);
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .project-tagline {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .meta-period {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .project-links {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .project-link {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.9rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  /* Content */
+  .project-content {
+    max-width: 760px;
+  }
+
+  .project-content :global(h2) {
+    font-size: 1.35rem;
+    margin: 2.5rem 0 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-content :global(h3) {
+    font-size: 1.1rem;
+    margin: 1.75rem 0 0.5rem;
+    color: var(--accent);
+  }
+
+  .project-content :global(p) {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    line-height: 1.75;
+  }
+
+  .project-content :global(ul) {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-content :global(li) {
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+
+  .project-content :global(strong) {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .project-content :global(code) {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 0.15em 0.4em;
+    font-size: 0.85em;
+    color: var(--accent);
+  }
+
+  .project-content :global(pre) {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
+  .project-content :global(.result-card) {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+
+  .project-content :global(.result-card p) {
+    margin: 0;
+  }
+
+  /* Inline PDF viewer */
+  .pdf-viewer-section :global(h2) {
+    font-size: 1.35rem;
+    margin: 2.5rem 0 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .pdf-viewer-wrap {
+    width: 100%;
+    aspect-ratio: 8.5 / 11;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .pdf-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+  .pdf-fallback {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding: 0.55rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: border-color var(--transition), background var(--transition);
+  }
+  .pdf-fallback:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .pdf-fallback a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .project-meta { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    .pdf-viewer-wrap { aspect-ratio: unset; height: 500px; }
+  }
+</style>

@@ -1,0 +1,134 @@
+---
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+
+const hasEnvironments = true;
+const hasNetworkDiagram = true;
+const hasHeatmap = true;
+---
+
+<ProjectLayout
+  title="Aether-Edge"
+  tagline="Decentralized edge-native building management system that eliminates Age of Information latency from 19.4 seconds to near-zero."
+  tags={['Edge Computing', 'Python', 'Sensors', 'Simulation', 'NumPy', 'NetworkX']}
+  github="https://github.com/Prabhjyot045/gas_prediction_network"
+  period="Jan 2026 – Apr 2026"
+  course="ECE 659 — Intelligent Sensors & Wireless Sensor Networks"
+  report="/assets/projects/aether-edge/report.pdf"
+>
+
+  <h2>Overview</h2>
+  <p>
+    Aether-Edge is a decentralized, predictive building management system designed to address a fundamental flaw in traditional centralized HVAC control: data staleness. By moving computation to the edge — directly onto sensor nodes — Aether-Edge eliminates the round-trip latency that causes comfort violations and energy waste in conventional architectures.
+  </p>
+
+  <h2>Problem Statement</h2>
+  <p>
+    Centralized Building Management Systems (BMS) operate on a poll-compute-push cycle: sensors send readings to a central controller, which computes control decisions and pushes commands back. Under network load or sensor failure, this cycle introduces significant <strong>Age of Information (AoI)</strong> — the staleness of the data the controller is acting on. In a simulated 5-zone university building floor, the centralized baseline produced an average AoI of <strong>19.4 seconds</strong>, resulting in measurable comfort violations (temperature overshoot) and unnecessary cooling plant usage.
+  </p>
+
+  <h2>Approach</h2>
+
+  <h3>Edge-Native Architecture</h3>
+  <p>
+    Rather than polling a central server, each zone's sensor node runs a local prediction model. The node continuously simulates its own thermal state using a <strong>Finite-Time Centered-Space (FTCS) heat diffusion solver</strong>, updating its internal model at each time step. Control decisions (e.g., whether to activate cooling) are made locally based on the predicted future temperature, not a stale past reading.
+  </p>
+
+  <h3>Physics-Based Prediction</h3>
+  <p>
+    The FTCS solver discretizes the heat diffusion PDE across the zone's spatial grid. At each timestep, each node computes the expected temperature distribution in its zone for the next <em>k</em> steps, using current readings as initial conditions and known thermal parameters (wall conductivity, occupant heat load, HVAC capacity) from the knowledge base.
+  </p>
+
+  <h3>Network Topology Simulation</h3>
+  <p>
+    <strong>NetworkX</strong> was used to model the sensor network topology — nodes represent sensor/actuator pairs per zone, and edges represent inter-zone thermal coupling and communication links. This allowed the simulation to model scenarios where nodes share state with neighbors to improve boundary-zone prediction accuracy.
+  </p>
+
+  <h3>3D Visualization</h3>
+  <p>
+    <strong>PyVista</strong> rendered the building floor as a 3D volume, with temperature distributions color-mapped across the spatial grid. This made it straightforward to visually verify that the FTCS solver was producing physically plausible heat diffusion patterns.
+  </p>
+
+  <h3>Testing</h3>
+  <p>
+    The project includes <strong>190+ unit and integration tests</strong> covering the FTCS solver correctness, network topology construction, edge prediction accuracy, and end-to-end comfort metric computation. All tests are JSON-driven and configurable via a central config file.
+  </p>
+
+  <h2>Results</h2>
+
+  <div class="result-card">
+    <p><strong>Age of Information reduced from 19.4 seconds (centralized) to ~0 seconds (edge)</strong> — control decisions are now made on real-time local state, not stale polled readings.</p>
+  </div>
+
+  <ul>
+    <li>Comfort violations (time-integrated temperature overshoot) reduced significantly across all 5 simulated zones.</li>
+    <li>Cooling plant energy consumption decreased as the controller no longer over-compensates for stale data.</li>
+    <li>190+ tests pass on a JSON-driven configuration, making it straightforward to benchmark different building topologies.</li>
+  </ul>
+
+  <h2>Reflection</h2>
+  <p>
+    This project reinforced how critical the Age of Information metric is in real-time control systems — it's not just about bandwidth, but about whether your controller is making decisions on current reality. The FTCS solver was the most challenging component to validate; getting the boundary conditions right at zone interfaces required careful numerical analysis. Future work could integrate a learned thermal model (e.g., a small neural network) to replace the physics-based FTCS solver for zones where the thermal parameters are uncertain.
+  </p>
+
+  {(hasEnvironments || hasNetworkDiagram || hasHeatmap) && (
+    <h2>Assets</h2>
+  )}
+
+  {hasEnvironments && (
+    <figure class="asset-figure">
+      <img src="/assets/projects/aether-edge/environments.png" alt="Test environments: university floor, airport terminal, large campus" loading="lazy" />
+      <figcaption>Evaluation environments — university floor (5 zones), airport terminal (6 zones), and large campus (14 zones) used for benchmarking edge vs. centralized control.</figcaption>
+    </figure>
+  )}
+
+  {hasNetworkDiagram && (
+    <figure class="asset-figure">
+      <img src="/assets/projects/aether-edge/network.png" alt="System architecture and sensor network topology" loading="lazy" />
+      <figcaption>System architecture — edge sensor nodes, gossip protocol mesh, and actuator layout across the simulated building floor.</figcaption>
+    </figure>
+  )}
+
+  {hasHeatmap && (
+    <figure class="asset-figure">
+      <img src="/assets/projects/aether-edge/heatmap.gif" alt="PyVista 3D heat diffusion visualization" loading="lazy" />
+      <figcaption>FTCS heat diffusion rendered in PyVista — temperature distribution evolving across zones in real time.</figcaption>
+    </figure>
+  )}
+
+
+</ProjectLayout>
+
+<style>
+  .asset-figure {
+    margin: 2rem 0;
+  }
+  .asset-figure img {
+    width: 100%;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  figcaption {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+  .asset-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.65rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--accent);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: border-color var(--transition), background var(--transition);
+  }
+  .asset-download:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+</style>

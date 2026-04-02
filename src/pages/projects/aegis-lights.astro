@@ -1,0 +1,170 @@
+---
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+
+const hasArchitectureDiagram = true;
+const hasDashboard = true;
+const hasSimulator = true;
+const hasVideo = true;
+---
+
+<ProjectLayout
+  title="Aegis Lights"
+  tagline="Self-adaptive urban traffic control system achieving 45–49% reduction in average trip time across all traffic density scenarios."
+  tags={['RL', 'Python', 'FastAPI', 'Kubernetes', 'IBM Cloud', 'Contextual Bandit', 'MAPE-K']}
+  github="https://github.com/Prabhjyot045"
+  period="Oct 2025 – Dec 2025"
+  course="ECE 750 — Self-Adaptive Software Systems"
+  report="/assets/projects/aegis-lights/report.pdf"
+>
+
+  <h2>Overview</h2>
+  <p>
+    Aegis Lights is a self-adaptive infrastructure system designed to optimize urban traffic signal timing in real time. Traditional fixed-cycle signals cannot react to dynamic conditions — accidents, surges, irregular flows — resulting in unnecessary congestion. Aegis Lights applies a closed-loop control architecture to sense, reason, and adapt signal phases continuously, deployed as a containerized microservice system on IBM Cloud.
+  </p>
+
+  <h2>Problem Statement</h2>
+  <p>
+    Static traffic signal phases fail under variable load. A single incident can cause queue spillback that propagates through an entire intersection network. The goal was to build a controller that could detect anomalous conditions and adapt signal timing without human intervention, using only real-time queue-length and flow data.
+  </p>
+
+  <h2>Approach</h2>
+
+  <h3>MAPE-K Feedback Loop</h3>
+  <p>
+    The system is architected around the <strong>Monitor-Analyze-Plan-Execute-Knowledge (MAPE-K)</strong> feedback loop — the standard pattern for self-adaptive systems. Each component has a well-defined responsibility:
+  </p>
+  <ul>
+    <li><strong>Monitor:</strong> Virtual sensor nodes continuously poll the CityFlow simulation for queue lengths, vehicle counts, and incident flags at each intersection lane.</li>
+    <li><strong>Analyze:</strong> Computes an incident-aware cost model that penalizes queue spillback and flags abnormal congestion states.</li>
+    <li><strong>Plan:</strong> Selects the next signal phase using a Contextual Bandit algorithm (UCB), balancing exploration of untested timing patterns with exploitation of known low-congestion phases.</li>
+    <li><strong>Execute:</strong> Applies the selected phase through the simulation API; phase changes are atomic and validated before execution.</li>
+    <li><strong>Knowledge:</strong> Persists per-intersection statistics, phase history, and incident logs to a SQLite/Parquet knowledge store to inform future decisions.</li>
+  </ul>
+
+  <h3>System Architecture & Deployment</h3>
+  <p>
+    The system is deployed as a suite of containerized microservices on <strong>IBM Cloud</strong>, orchestrated via <strong>Kubernetes Jobs and CronJobs</strong>:
+  </p>
+  <ul>
+    <li><strong>CityFlow Simulator:</strong> The traffic simulation engine runs as a K8s Job, exposing its state to the rest of the system.</li>
+    <li><strong>Virtual Sensors (Python):</strong> Lightweight sensor processes poll the simulator and publish readings to the knowledge store.</li>
+    <li><strong>MAPE-K Service (Python FastAPI):</strong> The core adaptive controller — implements Monitor, Analyze, Plan, Execute as REST endpoints. FastAPI with mutex locking manages concurrent read/write access to simulation state.</li>
+    <li><strong>Signal Controllers (Python):</strong> Receive phase commands from the MAPE-K service and apply them to the simulator.</li>
+    <li><strong>Knowledge Store:</strong> SQLite/Parquet for lightweight, schema-flexible persistence of sensor readings, phase history, and incident logs.</li>
+    <li><strong>IBM Cloud Object Storage (COS):</strong> Long-term artifact storage — simulation logs, performance reports.</li>
+    <li><strong>IBM Log Analysis:</strong> Centralized logging and observability across all microservices.</li>
+    <li><strong>IBM Container Registry (ICR):</strong> All service images are built and stored in ICR, pulled by K8s at deploy time.</li>
+    <li><strong>IBM Cloud Monitoring (Sysdig):</strong> Real-time metrics and alerting for system health.</li>
+  </ul>
+
+  <h3>Contextual Bandit Controller</h3>
+  <p>
+    Signal phase selection is framed as a multi-armed bandit problem where each "arm" represents a pre-validated phase configuration from a phase library. The <strong>Upper Confidence Bound (UCB)</strong> algorithm was chosen over epsilon-greedy for its principled exploration bonus, which ensures phases that haven't been recently tested remain in consideration even when a strong default exists.
+  </p>
+  <p>
+    The reward signal is the negative of the incident-aware cost model — phases that reduce queue buildup and avoid spillback receive higher rewards and are selected more frequently over time.
+  </p>
+
+  <h2>Results</h2>
+
+  <div class="result-card">
+    <p><strong>45–49% reduction in average trip time</strong> across low, medium, and high traffic density scenarios compared to fixed-phase baselines.</p>
+  </div>
+
+  <ul>
+    <li>Incident-aware cost model successfully rerouted virtual traffic flows when artificial roadway incidents were injected mid-simulation.</li>
+    <li>UCB exploration strategy discovered 2–3 non-obvious phase configurations per scenario that outperformed the human-designed defaults.</li>
+    <li>FastAPI service handled concurrent monitor and execute calls without deadlock across all test runs.</li>
+    <li>Full IBM Cloud deployment demonstrated end-to-end observability via IBM Log Analysis and Sysdig metrics.</li>
+  </ul>
+
+  <h2>Reflection</h2>
+  <p>
+    The MAPE-K pattern proved an excellent fit for this problem — the clean separation of concerns made it straightforward to swap the planning algorithm (e.g., replace UCB with a full RL policy) without touching the monitoring or execution layers. The IBM Cloud deployment surfaced real distributed systems challenges: container startup ordering, mutex contention under concurrent sensor polling, and log aggregation across ephemeral K8s Jobs. The main algorithmic limitation is that the bandit model has no memory of long-term phase sequences; a sequential RL agent (e.g., PPO) could likely push results further by learning multi-step timing strategies.
+  </p>
+
+  <h2>Assets</h2>
+
+  {hasVideo && (
+    <div class="asset-video">
+      <video controls preload="none" poster="/assets/projects/aegis-lights/simulator.png">
+        <source src="/assets/projects/aegis-lights/demo.mp4" type="video/mp4" />
+        Your browser does not support the video element.
+      </video>
+      <p class="video-caption">Aegis Lights simulation — CityFlow traffic network responding to adaptive signal control in real time.</p>
+    </div>
+  )}
+
+  {hasArchitectureDiagram && (
+    <figure class="asset-figure">
+      <img src="/assets/projects/aegis-lights/architecture.png" alt="Aegis Lights IBM Cloud deployment architecture" loading="lazy" />
+      <figcaption>IBM Cloud deployment — K8s-orchestrated microservices: CityFlow Simulator, Virtual Sensors, MAPE-K FastAPI service, Signal Controllers, Knowledge Store, IBM COS, Log Analysis, and Sysdig monitoring.</figcaption>
+    </figure>
+  )}
+
+  {hasDashboard && (
+    <figure class="asset-figure">
+      <img src="/assets/projects/aegis-lights/dashboard.png" alt="Aegis Lights live traffic network dashboard" loading="lazy" />
+      <figcaption>Live Aegis Lights dashboard — real-time CityFlow network graph with colored intersection nodes, performance history charts, and energy metrics panel.</figcaption>
+    </figure>
+  )}
+
+  {hasSimulator && (
+    <figure class="asset-figure">
+      <img src="/assets/projects/aegis-lights/simulator.png" alt="CityFlow simulator grid" loading="lazy" />
+      <figcaption>CityFlow simulator grid — intersection network used for all low, medium, and high traffic density experiments.</figcaption>
+    </figure>
+  )}
+
+
+</ProjectLayout>
+
+<style>
+  .asset-figure {
+    margin: 2rem 0;
+  }
+  .asset-figure img {
+    width: 100%;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  figcaption {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+  .asset-video {
+    margin: 2rem 0;
+  }
+  .asset-video video {
+    width: 100%;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .video-caption {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+  .asset-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.65rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--accent);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: border-color var(--transition), background var(--transition);
+  }
+  .asset-download:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+</style>

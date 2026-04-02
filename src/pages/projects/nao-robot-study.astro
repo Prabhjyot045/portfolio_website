@@ -1,0 +1,123 @@
+---
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+
+// Drop your files into: public/assets/projects/nao-robot-study/
+// - simulation.png      → Webots simulation screenshot
+// - study-design.png    → experimental design diagram
+// Update the flags below once you've added the files.
+const hasSimulationScreenshot = true;
+const hasStudyDesign = false;
+---
+
+<ProjectLayout
+  title="NAO Robot Teacher Gender Study"
+  tagline="Webots simulation investigating whether human gender bias extends to humanoid robots in educational settings."
+  tags={['HRI', 'Robotics', 'Bias Research', 'Python', 'Webots', 'NAO']}
+  github="https://github.com/Prabhjyot045/nao_robot_teacher_gender_study"
+  period="Jan 2026 – Apr 2026"
+  course="ECE 787 — Social Robotics"
+  report="/assets/projects/nao-robot-study/report.pdf"
+>
+
+  <h2>Overview</h2>
+  <p>
+    This project investigates a specific question at the intersection of social robotics and AI ethics: <strong>do students project human gender biases onto robotic instructors?</strong> As humanoid robots like NAO are increasingly deployed in educational and service contexts, understanding how their presentation — including assigned gender — affects human perception is crucial for designing fair and effective systems.
+  </p>
+
+  <h2>Research Question</h2>
+  <p>
+    When a humanoid robot is presented with gendered cues (voice pitch, name, pronouns), do human observers rate its competence, warmth, and authority differently? And does this pattern mirror documented gender bias in human teachers — where, for example, female instructors are rated higher on warmth but lower on authority?
+  </p>
+
+  <h2>Approach</h2>
+
+  <h3>Simulation Platform</h3>
+  <p>
+    The study uses the <strong>Webots</strong> robotics simulation platform with a <strong>NAO humanoid robot</strong> model. NAO was chosen because it is widely used in HRI research and has a well-characterized behavioral model, making it appropriate for controlled experiments where the robot's physical presentation can be systematically varied.
+  </p>
+
+  <h3>Gendered Presentation Conditions</h3>
+  <p>
+    Two experimental conditions were implemented:
+  </p>
+  <ul>
+    <li><strong>Condition A (Female-presenting):</strong> NAO uses a higher-pitch synthesized voice, a female name, and female pronouns in its scripted teaching interactions.</li>
+    <li><strong>Condition B (Male-presenting):</strong> NAO uses a lower-pitch synthesized voice, a male name, and male pronouns.</li>
+  </ul>
+  <p>
+    All other variables — lesson content, gesture repertoire, speaking pace, error rate — are held constant across conditions. The robot delivers the same structured lesson in both cases.
+  </p>
+
+  <h3>Behavioral Scripting</h3>
+  <p>
+    NAO's teaching behavior is implemented in Python using the Webots controller API. The script coordinates <strong>synchronized speech, gesture, and gaze</strong> — NAO turns toward the virtual student, gestures toward a simulated whiteboard, and delivers lesson content with appropriate pauses. The behavior tree was designed to feel naturalistic without introducing confounding differences between conditions.
+  </p>
+
+  <h2>Connection to Ethical AI</h2>
+  <p>
+    This project connects directly to broader questions in AI alignment and fairness. If robotic systems inherit human gender biases in how they are perceived, then deploying them in high-stakes contexts (education, healthcare, hiring support) risks perpetuating and amplifying those biases at scale. Understanding the mechanism — whether bias is triggered by gendered voice, name, or both — is a prerequisite for designing mitigation strategies.
+  </p>
+  <p>
+    The work complements my research in ethical reinforcement learning: both projects are fundamentally about how AI systems interact with human values and whether those interactions can be made fairer and more transparent.
+  </p>
+
+  <h2>Status</h2>
+  <p>
+    The simulation environment and behavioral scripts are complete. Study design and analysis are in progress as part of the ECE 787 course deliverable.
+  </p>
+
+  {(hasSimulationScreenshot || hasStudyDesign) && (
+    <h2>Assets</h2>
+  )}
+
+  {hasStudyDesign && (
+    <figure class="asset-figure">
+      <img src="/assets/projects/nao-robot-study/study-design.png" alt="Experimental study design diagram" loading="lazy" />
+      <figcaption>Experimental design — two gender-presentation conditions with all other variables held constant.</figcaption>
+    </figure>
+  )}
+
+  {hasSimulationScreenshot && (
+    <figure class="asset-figure">
+      <img src="/assets/projects/nao-robot-study/simulation.png" alt="Webots simulation screenshot of NAO robot" loading="lazy" />
+      <figcaption>NAO robot in the Webots simulation environment, delivering a structured lesson to a virtual student.</figcaption>
+    </figure>
+  )}
+
+
+</ProjectLayout>
+
+<style>
+  .asset-figure {
+    margin: 2rem 0;
+  }
+  .asset-figure img {
+    width: 100%;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  figcaption {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+  .asset-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.65rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--accent);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: border-color var(--transition), background var(--transition);
+  }
+  .asset-download:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+</style>

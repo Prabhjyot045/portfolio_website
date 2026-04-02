@@ -1,0 +1,109 @@
+---
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+---
+
+<ProjectLayout
+  title="Canary"
+  tagline="IoT personal air quality monitor with a custom PCB, 3D-printed enclosure, and Android companion app communicating over Bluetooth Low Energy."
+  tags={['IoT', 'Embedded C', 'PCB Design', 'Android', 'BLE', 'Sensors']}
+  github="https://github.com/mkusnir/canary-dev"
+  period="Sep 2024 – Apr 2025"
+  course="ECE 498B — 4th Year Capstone Design"
+  report="/assets/projects/canary/report.pdf"
+>
+
+  <h2>Overview</h2>
+  <p>
+    Canary is a personal air quality monitor built from the ground up — custom PCB, embedded firmware, 3D-printed enclosure, and an Android companion app. The device continuously samples indoor air quality metrics and streams readings to a paired phone over Bluetooth Low Energy, giving users real-time feedback on their environment in a portable, self-contained form factor.
+  </p>
+
+  <h2>Problem Statement</h2>
+  <p>
+    Consumer air quality monitors are either expensive, cloud-dependent, or provide limited sensor data. Canary's goal was to build a low-cost, self-contained device that runs entirely without an internet connection — all sensing, processing, and display handled on-device or over a direct BLE link to a phone — while remaining accurate enough to detect meaningful changes in indoor air quality.
+  </p>
+
+  <h2>Hardware Design</h2>
+
+  <h3>Custom PCB</h3>
+  <p>
+    The core of Canary is a custom-designed PCB integrating a microcontroller with the sensor array and BLE radio. The board was designed to minimize footprint while keeping all peripherals accessible for firmware debugging. Key design considerations included stable power delivery to the gas sensors (which are sensitive to voltage noise), UART and I²C bus routing for sensor communication, and antenna clearance for the BLE module.
+  </p>
+
+  <h3>Sensor Suite</h3>
+  <p>
+    The device samples multiple air quality indicators — including particulate matter, CO₂ equivalent, and total volatile organic compounds (TVOCs) — providing a composite picture of indoor air quality rather than a single metric. Sensor selection prioritized accuracy at room temperature, low quiescent current for battery operation, and compatibility with the chosen microcontroller's I²C and UART peripherals.
+  </p>
+
+  <h3>Enclosure</h3>
+  <p>
+    The housing was designed in CAD and 3D-printed, with intake vents positioned to allow passive airflow across the sensor array without trapping heat from the PCB. The enclosure also integrates a mounting slot for the display and a recessed USB port for charging and firmware flashing.
+  </p>
+
+  <h2>Firmware</h2>
+  <p>
+    The embedded firmware (written in C) handles sensor polling over I²C and UART, local data aggregation, BLE advertisement and GATT service management, and power management. The BLE GATT profile exposes air quality characteristics that the Android app subscribes to via notifications, so the phone receives updates only when readings change — minimizing radio duty cycle and extending battery life.
+  </p>
+
+  <h2>Android Companion App</h2>
+  <p>
+    The Android app (built with Android Studio) scans for Canary devices, pairs via BLE, and displays live sensor readings with a clean dashboard UI. The app subscribes to GATT notifications from the device and updates the display in real time. Historical readings are stored locally on the phone, allowing users to review trends over time without any cloud dependency.
+  </p>
+
+  <h2>Results</h2>
+
+  <div class="result-card">
+    <p><strong>End-to-end system delivered:</strong> custom PCB, embedded BLE firmware, 3D-printed enclosure, and a working Android app — all integrated and demonstrated as a complete product prototype.</p>
+  </div>
+
+  <ul>
+    <li>Sensor readings streamed reliably over BLE at configurable polling intervals with stable GATT notification delivery.</li>
+    <li>Device fit within the 3D-printed enclosure with all ports accessible and adequate airflow across the sensor array.</li>
+    <li>Android app displayed live air quality metrics with local history logging, requiring no internet connection.</li>
+    <li>Battery life met target duration under normal sampling rates.</li>
+  </ul>
+
+  <h2>Reflection</h2>
+  <p>
+    Canary was the most hardware-complete project I've worked on — going from schematic to PCB layout to soldered board to working firmware within a single academic year. The biggest challenge was debugging the interaction between the gas sensor warm-up time, the BLE connection interval, and the microcontroller's sleep modes: getting all three to coexist without dropped notifications or corrupted sensor reads required careful timing analysis. On the software side, Android's BLE API has significant quirks around connection state management that required retry logic and careful threading to handle reliably.
+  </p>
+
+  <h2>Gallery</h2>
+
+  <figure class="asset-figure">
+    <img src="/assets/projects/canary/device_app.jpg" alt="Canary device alongside the Android companion app" loading="lazy" />
+    <figcaption>The assembled Canary device next to the Android companion app displaying live air quality readings.</figcaption>
+  </figure>
+
+  <figure class="asset-figure">
+    <img src="/assets/projects/canary/symposium.jpg" alt="Canary team presenting at the capstone design symposium" loading="lazy" />
+    <figcaption>Presenting Canary at the ECE 4th Year Capstone Design Symposium.</figcaption>
+  </figure>
+
+  <figure class="asset-figure">
+    <img src="/assets/projects/canary/symposium_2.jpg" alt="Canary project display at the design symposium" loading="lazy" />
+    <figcaption>Canary project display — hardware, enclosure, and demo setup at the symposium.</figcaption>
+  </figure>
+
+  <figure class="asset-figure">
+    <img src="/assets/projects/canary/group.jpg" alt="The Canary team" loading="lazy" />
+    <figcaption>The Canary team.</figcaption>
+  </figure>
+
+</ProjectLayout>
+
+<style>
+  .asset-figure {
+    margin: 2rem 0;
+  }
+  .asset-figure img {
+    width: 100%;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  figcaption {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+</style>
