@@ -591,6 +591,12 @@ function tagColor(tag: string) {
             </div>
             <div class="edu-right">
               <div class="edu-dates">Sep 2020 – Apr 2025</div>
+              <div class="edu-graduated">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Graduated
+              </div>
               <div class="edu-coops">6 Co-op Terms</div>
             </div>
           </div>
@@ -682,7 +688,6 @@ function tagColor(tag: string) {
     <footer class="site-footer">
       <div class="container">
         <span>&copy; 2026 Prabhjyot Singh</span>
-        <span>Built with Astro</span>
       </div>
     </footer>
   </section>
@@ -1302,6 +1307,19 @@ function tagColor(tag: string) {
   color: var(--green);
   background: var(--green-dim);
   border: 1px solid rgba(63,185,80,0.25);
+  border-radius: var(--radius-xs);
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
+}
+.edu-graduated {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid rgba(88,166,255,0.25);
   border-radius: var(--radius-xs);
   padding: 0.2rem 0.5rem;
   white-space: nowrap;
